@@ -31,15 +31,13 @@ const orderSlice = createSlice({
           state.ingredients.push(action.payload);
         }
       },
-      prepare: (ingredient: TIngredient) => {
-        const bek = 1;
-        return {
-          payload: {
-            ...ingredient,
-            id: nanoid()
-          }
-        };
-      }
+      prepare: (ingredient: TIngredient) => ({
+        // Тут исправлено без return
+        payload: {
+          ...ingredient,
+          id: nanoid()
+        }
+      })
     },
     removeIngredient: (state, action: PayloadAction<string>) => {
       state.ingredients = state.ingredients.filter(

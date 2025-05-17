@@ -1,12 +1,13 @@
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { getAuthState, getUser } from '../../slices/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 export const Profile: FC = () => {
   /** TODO: взять переменную из стора */
-  const user = {
-    name: '',
-    email: ''
-  };
+
+  const user = useSelector(getUser);
 
   const [formValue, setFormValue] = useState({
     name: user.name,
@@ -14,6 +15,9 @@ export const Profile: FC = () => {
     password: ''
   });
 
+  const navigate = useNavigate();
+
+  // НАдо сделать через протектер роут
   useEffect(() => {
     setFormValue((prevState) => ({
       ...prevState,
@@ -56,6 +60,4 @@ export const Profile: FC = () => {
       handleInputChange={handleInputChange}
     />
   );
-
-  return null;
 };

@@ -13,11 +13,9 @@ export const OrderInfo: FC = () => {
   const location = useLocation();
   const id = location.pathname.split('/').pop();
 
-  console.log('ID из URL:', id); // Например: "11145"
   const orderData = useSelector(getFeed).find(
     (item) => item.number === Number(id)
   );
-  console.log(orderData);
 
   const ingredients: TIngredient[] = useSelector(selectAllIngredients);
 
@@ -62,7 +60,6 @@ export const OrderInfo: FC = () => {
       total
     };
   }, [orderData, ingredients]);
-
   if (!orderInfo) {
     return <Preloader />;
   }

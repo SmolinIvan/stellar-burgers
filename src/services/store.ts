@@ -8,6 +8,7 @@ import {
   useDispatch as dispatchHook,
   useSelector as selectorHook
 } from 'react-redux';
+import { userReducer } from '../slices/userSlice';
 
 // const rootReducer = () => {}; // Заменить на импорт настоящего редьюсера
 
@@ -15,7 +16,8 @@ const store = configureStore({
   reducer: {
     ingredients: ingredientsReducer,
     order: orderReducer,
-    feed: feedReducer
+    feed: feedReducer,
+    user: userReducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 });
