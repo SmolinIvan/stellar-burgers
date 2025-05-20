@@ -13,9 +13,9 @@ export const ProtectedRoute = ({
 }: ProtectedRouteProps) => {
   const location = useLocation();
 
-  // if (isAuth && type === 'public') {
-  //   return <Navigate replace to='/' />;
-  // }
+  if (isAuth && type === 'public') {
+    return <Navigate replace to='/' />;
+  }
 
   if (!isAuth && type === 'protected') {
     return <Navigate to='/login' state={{ from: location }} replace />;

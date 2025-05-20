@@ -29,40 +29,60 @@ import {
   useParams
 } from 'react-router-dom';
 import { fetchIngredients } from '../../slices/ingredientsSlice';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { fetchAllOrders, getFeed } from '../../slices/feedSlice';
 import {
   checkAuthed,
   fetchGetUser,
   getAuthState
 } from '../../slices/userSlice';
+import { useNavigationHistory } from '../../utils/customHooks.ts/useNavigationHistory';
 
 const App = () => {
   const isAuthed = useSelector(getAuthState);
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  // Пока не удается использовать кастомных хук useNavigationHistory с сохранением истории
+
   useEffect(() => {
     dispatch(fetchIngredients());
     dispatch(fetchAllOrders());
     dispatch(checkAuthed());
     dispatch(fetchGetUser());
   }, [dispatch, isAuthed]);
-
-  const location = useLocation();
   const background = location.state?.background;
   const orderNumber = location.pathname.split('/').pop();
   const navigate = useNavigate();
+  // console.log(location.state?.from?.pathname);
 
   // Стандартная функция закрытия с возвратом
-  const defaultCloseHandler = () => {
-    navigate(-1); // Возврат на предыдущий URL
+  const defaultCloseIngredientHandler = () => {
+    navigate('/'); // Возврат на предыдущий URL
   };
-  // console.log(isAuthed);
+
+  const defaultCloseFeedOrderHandler = () => {
+    navigate('/feed'); // Возврат на предыдущий URL
+  };
+
   return (
     <>
       <AppHeader />
       <div className={styles.app}>
         <Routes location={background || location}>
-          <Route path='/' element={<ConstructorPage />} />
+          <Route path='/' element={<ConstructorPage />}>
+            <Route
+              path='ingredients/:id'
+              element={
+                <Modal
+                  title='Детали ингридиента'
+                  onClose={defaultCloseIngredientHandler}
+                >
+                  <IngredientDetails />
+                </Modal>
+              }
+            />
+          </Route>
           <Route
             path='/login'
             element={
@@ -122,7 +142,10 @@ const App = () => {
             <Route
               path='/feed/:number'
               element={
-                <Modal title={`#${orderNumber}`} onClose={defaultCloseHandler}>
+                <Modal
+                  title={`#${orderNumber}`}
+                  onClose={defaultCloseFeedOrderHandler}
+                >
                   <OrderInfo />
                 </Modal>
               }
@@ -130,7 +153,10 @@ const App = () => {
             <Route
               path='/ingredients/:id'
               element={
-                <Modal title='Детали ингридиента' onClose={defaultCloseHandler}>
+                <Modal
+                  title='Детали ингридиента'
+                  onClose={defaultCloseIngredientHandler}
+                >
                   <IngredientDetails />
                 </Modal>
               }

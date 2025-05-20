@@ -15,8 +15,6 @@ export const Profile: FC = () => {
     password: ''
   });
 
-  const navigate = useNavigate();
-
   // НАдо сделать через протектер роут
   useEffect(() => {
     setFormValue((prevState) => ({

@@ -10,6 +10,7 @@ import {
   fetchIngredients,
   ingredientsAreLoading
 } from '../../slices/ingredientsSlice';
+import { Outlet } from 'react-router-dom';
 
 export const ConstructorPage: FC = () => {
   /** TODO: взять переменную из стора */
@@ -30,6 +31,7 @@ export const ConstructorPage: FC = () => {
             <BurgerIngredients />
             <BurgerConstructor />
           </div>
+          <Outlet />
         </main>
       )}
     </>
