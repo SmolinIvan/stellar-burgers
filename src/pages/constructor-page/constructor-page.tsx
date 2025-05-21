@@ -1,15 +1,20 @@
-import { useSelector } from '../../services/store';
+import { AppDispatch, useDispatch, useSelector } from '../../services/store';
 
 import styles from './constructor-page.module.css';
 
 import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import {
+  fetchIngredients,
+  ingredientsAreLoading
+} from '../../slices/ingredientsSlice';
+import { Outlet } from 'react-router-dom';
 
 export const ConstructorPage: FC = () => {
   /** TODO: взять переменную из стора */
-  const isIngredientsLoading = false;
+  const isIngredientsLoading = useSelector(ingredientsAreLoading);
 
   return (
     <>
@@ -26,6 +31,7 @@ export const ConstructorPage: FC = () => {
             <BurgerIngredients />
             <BurgerConstructor />
           </div>
+          <Outlet />
         </main>
       )}
     </>

@@ -1,5 +1,5 @@
 import React, { FC, memo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './burger-ingredient.module.css';
 
 import {
@@ -16,11 +16,7 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
 
     return (
       <li className={styles.container}>
-        <Link
-          className={styles.article}
-          to={`/ingredients/${_id}`}
-          state={locationState}
-        >
+        <Link className={styles.article} to={`/ingredients/${_id}`}>
           {count && <Counter count={count} />}
           <img className={styles.img} src={image} alt='картинка ингредиента.' />
           <div className={`${styles.cost} mt-2 mb-2`}>
