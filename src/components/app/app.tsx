@@ -5,6 +5,7 @@ import {
   Login,
   NotFound404,
   Profile,
+  ProfileOrders,
   Register,
   ResetPassword
 } from '@pages';
@@ -16,54 +17,44 @@ import {
   IngredientDetails,
   Modal,
   OrderInfo,
-  ProtectedRoute,
-  PublicRoute
+  ProtectedRoute
 } from '@components';
-import store, { useDispatch } from '../../services/store';
-import { Provider, useSelector } from 'react-redux';
-import {
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-  useParams
-} from 'react-router-dom';
+import { useDispatch } from '../../services/store';
+import { useSelector } from 'react-redux';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { fetchIngredients } from '../../slices/ingredientsSlice';
-import { useEffect, useRef, useState } from 'react';
-import { fetchAllOrders, getFeed } from '../../slices/feedSlice';
+import { useEffect } from 'react';
+import { fetchFeedOrders, getFeed } from '../../slices/feedSlice';
 import {
-  checkAuthed,
   fetchGetUser,
-  getAuthState
+  getAuthState,
+  getProcessAuthStatus
 } from '../../slices/userSlice';
 import { useNavigationHistory } from '../../utils/customHooks.ts/useNavigationHistory';
+import { clearLastOrder, fetchGetOrders } from '../../slices/orderSlice';
 
 const App = () => {
+  const isAwaited = useSelector(getProcessAuthStatus);
   const isAuthed = useSelector(getAuthState);
   const dispatch = useDispatch();
   const location = useLocation();
 
-  // Пока не удается использовать кастомных хук useNavigationHistory с сохранением истории
-
   useEffect(() => {
     dispatch(fetchIngredients());
-    dispatch(fetchAllOrders());
-    dispatch(checkAuthed());
+    dispatch(fetchFeedOrders());
     dispatch(fetchGetUser());
-  }, [dispatch, isAuthed]);
+    dispatch(fetchGetOrders());
+  }, [dispatch]);
   const background = location.state?.background;
   const orderNumber = location.pathname.split('/').pop();
   const navigate = useNavigate();
-  // console.log(location.state?.from?.pathname);
 
-  // Стандартная функция закрытия с возвратом
-  const defaultCloseIngredientHandler = () => {
-    navigate('/'); // Возврат на предыдущий URL
-  };
-
-  const defaultCloseFeedOrderHandler = () => {
-    navigate('/feed'); // Возврат на предыдущий URL
-  };
+  function defaultCloseModal(path: string, clearOrder?: boolean) {
+    navigate(path);
+    if (clearOrder) {
+      dispatch(clearLastOrder());
+    }
+  }
 
   return (
     <>
@@ -76,7 +67,7 @@ const App = () => {
               element={
                 <Modal
                   title='Детали ингридиента'
-                  onClose={defaultCloseIngredientHandler}
+                  onClose={() => defaultCloseModal('/')}
                 >
                   <IngredientDetails />
                 </Modal>
@@ -88,6 +79,7 @@ const App = () => {
             element={
               <ProtectedRoute
                 type='public'
+                isAwaited={isAwaited}
                 isAuth={isAuthed}
                 children={<Login />}
               />
@@ -97,6 +89,7 @@ const App = () => {
             path='/register'
             element={
               <ProtectedRoute
+                isAwaited={isAwaited}
                 type='public'
                 isAuth={isAuthed}
                 children={<Register />}
@@ -107,6 +100,7 @@ const App = () => {
             path='/forgot-password'
             element={
               <ProtectedRoute
+                isAwaited={isAwaited}
                 type='public'
                 isAuth={isAuthed}
                 children={<ForgotPassword />}
@@ -117,6 +111,7 @@ const App = () => {
             path='/reset-password'
             element={
               <ProtectedRoute
+                isAwaited={isAwaited}
                 type='public'
                 isAuth={isAuthed}
                 children={<ResetPassword />}
@@ -127,9 +122,32 @@ const App = () => {
             path='/profile'
             element={
               <ProtectedRoute
+                isAwaited={isAwaited}
                 type='protected'
                 isAuth={isAuthed}
                 children={<Profile />}
+              />
+            }
+          />
+          <Route
+            path='/profile/orders'
+            element={
+              <ProtectedRoute
+                isAwaited={isAwaited}
+                type='protected'
+                isAuth={isAuthed}
+                children={<ProfileOrders />}
+              />
+            }
+          />
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <ProtectedRoute
+                isAwaited={isAwaited}
+                type='protected'
+                isAuth={isAuthed}
+                children={<OrderInfo />}
               />
             }
           />
@@ -144,7 +162,7 @@ const App = () => {
               element={
                 <Modal
                   title={`#${orderNumber}`}
-                  onClose={defaultCloseFeedOrderHandler}
+                  onClose={() => defaultCloseModal('/feed', true)}
                 >
                   <OrderInfo />
                 </Modal>
@@ -155,10 +173,28 @@ const App = () => {
               element={
                 <Modal
                   title='Детали ингридиента'
-                  onClose={defaultCloseIngredientHandler}
+                  onClose={() => defaultCloseModal('/')}
                 >
                   <IngredientDetails />
                 </Modal>
+              }
+            />
+            <Route
+              path='/profile/orders/:number'
+              element={
+                <ProtectedRoute
+                  isAwaited={isAwaited}
+                  type='protected'
+                  isAuth={isAuthed}
+                  children={
+                    <Modal
+                      title={`#${orderNumber}`}
+                      onClose={() => defaultCloseModal('/profile/orders', true)}
+                    >
+                      <OrderInfo />
+                    </Modal>
+                  }
+                />
               }
             />
           </Routes>

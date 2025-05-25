@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
@@ -6,16 +6,21 @@ import { useSelector } from 'react-redux';
 import { selectAllIngredients } from '../../slices/ingredientsSlice';
 import { useLocation, useParams } from 'react-router-dom';
 import { getFeed } from '../../slices/feedSlice';
+import { fetchGetOrderById, getCurrentOrder } from '../../slices/orderSlice';
+import { useDispatch } from '../../services/store';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
 
-  const location = useLocation();
-  const id = location.pathname.split('/').pop();
+  const { number } = useParams();
+  const currentOrder = useSelector(getCurrentOrder);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchGetOrderById(Number(number)));
+  }, [dispatch]);
 
-  const orderData = useSelector(getFeed).find(
-    (item) => item.number === Number(id)
-  );
+  console.log(currentOrder);
+  const orderData = useSelector(getCurrentOrder);
 
   const ingredients: TIngredient[] = useSelector(selectAllIngredients);
 

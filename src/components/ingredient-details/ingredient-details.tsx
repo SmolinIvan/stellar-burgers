@@ -9,7 +9,6 @@ export const IngredientDetails: FC = () => {
   /** TODO: взять переменную из стора */
 
   const { id } = useParams();
-  console.log(id);
   const ingredientData = useSelector(selectAllIngredients).find(
     (item) => item._id === id
   );

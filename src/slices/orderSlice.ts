@@ -1,4 +1,9 @@
-import { getFeedsApi } from '@api';
+import {
+  getFeedsApi,
+  getOrderByNumberApi,
+  getOrdersApi,
+  orderBurgerApi
+} from '@api';
 import {
   createAsyncThunk,
   createSlice,
@@ -11,14 +16,60 @@ interface OrderState {
   bun: TIngredient | null;
   ingredients: TConstructorIngredient[];
   orders: TOrder[];
+  isMakingOrder: boolean;
+  currentOrder: TOrder | null;
 }
 
 const initialState: OrderState = {
   bun: null,
   ingredients: [],
-  orders: []
+  orders: [],
+  isMakingOrder: false,
+  currentOrder: null
 };
 
+export const fetchMakeOrder = createAsyncThunk(
+  'order/makeOrder',
+  async (data: string[], { rejectWithValue }) => {
+    try {
+      // const { email, password } = data
+      const order = await orderBurgerApi(data);
+      return order;
+    } catch (error) {
+      // console.log(error);
+      return rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+export const fetchGetOrders = createAsyncThunk(
+  'order/getOrders',
+  async (_, { rejectWithValue }) => {
+    try {
+      // const { email, password } = data
+      const orders = await getOrdersApi();
+      return orders;
+    } catch (error) {
+      // console.log(error);
+      return rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+export const fetchGetOrderById = createAsyncThunk(
+  'order/getOrderById',
+  async (id: number, { rejectWithValue }) => {
+    try {
+      // const { email, password } = data
+      const order = await getOrderByNumberApi(id);
+      return order;
+    } catch (error) {
+      // console.log(error);
+      return rejectWithValue((error as Error).message);
+    }
+  }
+);
+// const orderData = fetchGetOrderById(Number(id))
 const orderSlice = createSlice({
   name: 'order',
   initialState,
@@ -32,7 +83,6 @@ const orderSlice = createSlice({
         }
       },
       prepare: (ingredient: TIngredient) => ({
-        // Тут исправлено без return
         payload: {
           ...ingredient,
           id: nanoid()
@@ -43,6 +93,10 @@ const orderSlice = createSlice({
       state.ingredients = state.ingredients.filter(
         (ingredient) => ingredient.id !== action.payload
       );
+    },
+    clearLastOrder: (state) => {
+      state.currentOrder = null;
+      state.isMakingOrder = false;
     },
     moveIngredient: {
       reducer: (
@@ -85,19 +139,50 @@ const orderSlice = createSlice({
         payload: { index, direction }
       })
     }
-    // Можно добавить другие actions по необходимости
-    // например, removeIngredient, moveIngredient и т.д.
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchMakeOrder.fulfilled, (state, action) => {
+        console.log(state.orders);
+        state.orders = [...state.orders, action.payload.order];
+        state.currentOrder = action.payload.order;
+        state.isMakingOrder = false;
+        state.ingredients = [];
+        state.bun = null;
+      })
+      .addCase(fetchMakeOrder.pending, (state) => {
+        state.isMakingOrder = true;
+      })
+      .addCase(fetchMakeOrder.rejected, (state) => {
+        state.isMakingOrder = false;
+      })
+      .addCase(fetchGetOrders.fulfilled, (state, action) => {
+        state.orders = action.payload;
+      })
+      .addCase(fetchGetOrderById.fulfilled, (state, action) => {
+        state.currentOrder = action.payload.orders[0];
+      });
   },
   selectors: {
     getIngredients: (state) => state.ingredients,
-    getBun: (state) => state.bun
+    getBun: (state) => state.bun,
+    getOrders: (state) => state.orders,
+    getCurrentOrder: (state) => state.currentOrder,
+    getMakingOrderStatus: (state) => state.isMakingOrder
   }
 });
 
-export const { getIngredients, getBun } = orderSlice.selectors;
+export const {
+  getIngredients,
+  getBun,
+  getOrders,
+  getCurrentOrder,
+  getMakingOrderStatus
+} = orderSlice.selectors;
 export const {
   addIngredient,
   removeIngredient,
+  clearLastOrder,
   moveIngredient,
   swapAdjacentIngredients
 } = orderSlice.actions;

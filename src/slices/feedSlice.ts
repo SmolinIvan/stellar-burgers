@@ -20,7 +20,7 @@ const initialState: FeedState = {
   success: false
 };
 
-export const fetchAllOrders = createAsyncThunk(
+export const fetchFeedOrders = createAsyncThunk(
   'orders/fetchAllOrders',
   async (_, { rejectWithValue }) => {
     try {
@@ -43,18 +43,18 @@ const feedSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllOrders.pending, (state) => {
+      .addCase(fetchFeedOrders.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(fetchAllOrders.fulfilled, (state, action) => {
+      .addCase(fetchFeedOrders.fulfilled, (state, action) => {
         state.isLoading = false;
         state.orders = action.payload.orders;
         state.total = action.payload.total;
         state.totalToday = action.payload.total;
         state.success = action.payload.success;
       })
-      .addCase(fetchAllOrders.rejected, (state, action) => {
+      .addCase(fetchFeedOrders.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });

@@ -17,17 +17,19 @@ interface IUser {
   accessToken: string | undefined;
   refreshToken: string | undefined;
   user: TUser;
+  errorText: string;
 }
 
 const initialState: IUser = {
-  isAwaiting: false,
+  isAwaiting: true,
   isAuthed: false,
   accessToken: undefined,
   refreshToken: undefined,
   user: {
     email: '',
     name: ''
-  }
+  },
+  errorText: ''
 };
 
 export const fetchLogin = createAsyncThunk(
@@ -79,15 +81,6 @@ const userSlice = createSlice({
   // },
   initialState,
   reducers: {
-    checkAuthed: (state) => {
-      const accessToken = getCookie('accessToken');
-      const refreshToken = getCookie('refreshToken');
-      if (accessToken != undefined || refreshToken != undefined) {
-        state.isAuthed = true;
-      } else {
-        state.isAuthed = false;
-      }
-    },
     logOut: (state) => {
       state.isAuthed = false;
       console.log(state.isAuthed);
@@ -110,8 +103,9 @@ const userSlice = createSlice({
         localStorage.setItem('refreshToken', state.refreshToken);
       })
       .addCase(fetchLogin.rejected, (state, action) => {
+        state.isAwaiting = false;
         state.isAuthed = false;
-        console.log('Ошибка при логине');
+        state.errorText = action.payload as string;
       })
       .addCase(fetchRegister.pending, (state) => {
         state.isAwaiting = true;
@@ -124,26 +118,31 @@ const userSlice = createSlice({
         setCookie('accessToken', state.accessToken);
         localStorage.setItem('refreshToken', state.refreshToken);
       })
-      .addCase(fetchRegister.rejected, (state, action) => {
-        console.log('Ошибка при при регистрации');
+      .addCase(fetchRegister.rejected, (state) => {
+        state.isAwaiting = false;
       })
       .addCase(fetchGetUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
-        // console.log('Авторизован');
+        state.isAwaiting = false;
+        state.isAuthed = true;
       })
-      .addCase(fetchGetUser.pending, (state, action) => {
-        // console.log('Грузим данные пользователя');
+      .addCase(fetchGetUser.pending, (state) => {
+        state.isAwaiting = true;
       })
       .addCase(fetchGetUser.rejected, (state, action) => {
         state.isAuthed = false;
+        state.isAwaiting = false;
       });
   },
   selectors: {
     getAuthState: (state) => state.isAuthed,
-    getUser: (state) => state.user
+    getUser: (state) => state.user,
+    getProcessAuthStatus: (state) => state.isAwaiting,
+    getErrorText: (state) => state.errorText
   }
 });
 
-export const { checkAuthed, logOut } = userSlice.actions;
-export const { getAuthState, getUser } = userSlice.selectors;
+export const { logOut } = userSlice.actions;
+export const { getAuthState, getUser, getProcessAuthStatus, getErrorText } =
+  userSlice.selectors;
 export const userReducer = userSlice.reducer;
