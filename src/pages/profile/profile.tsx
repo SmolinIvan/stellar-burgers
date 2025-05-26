@@ -1,7 +1,7 @@
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getAuthState, getUser } from '../../slices/userSlice';
+import { getAuthState, getUser } from '../../services/slices/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 export const Profile: FC = () => {

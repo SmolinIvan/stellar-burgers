@@ -4,17 +4,15 @@ import { BurgerConstructorUI } from '@ui';
 import { useSelector } from 'react-redux';
 import {
   clearLastOrder,
-  fetchGetOrders,
   fetchMakeOrder,
   getBun,
   getCurrentOrder,
   getIngredients,
-  getMakingOrderStatus,
-  getOrders
-} from '../../slices/orderSlice';
+  getMakingOrderStatus
+} from '../../services/slices/orderSlice';
 import { useDispatch } from '../../services/store';
 import { useNavigate } from 'react-router-dom';
-import { getAuthState } from '../../slices/userSlice';
+import { getAuthState } from '@slices';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */

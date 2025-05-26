@@ -22,16 +22,10 @@ import {
 import { useDispatch } from '../../services/store';
 import { useSelector } from 'react-redux';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { fetchIngredients } from '../../slices/ingredientsSlice';
+import { clearLastOrder, fetchGetOrders, fetchIngredients } from '@slices';
 import { useEffect } from 'react';
-import { fetchFeedOrders, getFeed } from '../../slices/feedSlice';
-import {
-  fetchGetUser,
-  getAuthState,
-  getProcessAuthStatus
-} from '../../slices/userSlice';
-import { useNavigationHistory } from '../../utils/customHooks.ts/useNavigationHistory';
-import { clearLastOrder, fetchGetOrders } from '../../slices/orderSlice';
+import { fetchFeedOrders } from '@slices';
+import { fetchGetUser, getAuthState, getProcessAuthStatus } from '@slices';
 
 const App = () => {
   const isAwaited = useSelector(getProcessAuthStatus);

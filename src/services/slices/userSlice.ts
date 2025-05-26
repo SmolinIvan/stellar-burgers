@@ -7,9 +7,7 @@ import {
 } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
-import { deleteCookie, getCookie, setCookie } from '../utils/cookie';
-import { access, stat } from 'fs';
-import e from 'express';
+import { deleteCookie, setCookie } from '../../utils/cookie';
 
 interface IUser {
   isAwaiting: boolean;
@@ -41,7 +39,6 @@ export const fetchLogin = createAsyncThunk(
       console.log(userData);
       return userData;
     } catch (error) {
-      // console.log(error);
       return rejectWithValue((error as Error).message);
     }
   }
@@ -52,10 +49,8 @@ export const fetchRegister = createAsyncThunk(
   async (data: TRegisterData, { rejectWithValue }) => {
     try {
       const userData = await registerUserApi(data);
-      console.log(userData);
       return userData;
     } catch (error) {
-      console.log(error);
       return rejectWithValue((error as Error).message);
     }
   }
@@ -76,9 +71,6 @@ export const fetchGetUser = createAsyncThunk(
 
 const userSlice = createSlice({
   name: 'user',
-  // initialState: {
-
-  // },
   initialState,
   reducers: {
     logOut: (state) => {
@@ -92,6 +84,7 @@ const userSlice = createSlice({
     builder
       .addCase(fetchLogin.pending, (state) => {
         state.isAwaiting = true;
+        state.errorText = '';
       })
       .addCase(fetchLogin.fulfilled, (state, action) => {
         state.user = action.payload.user;
@@ -99,6 +92,7 @@ const userSlice = createSlice({
         state.isAuthed = true;
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
+        state.errorText = '';
         setCookie('accessToken', state.accessToken);
         localStorage.setItem('refreshToken', state.refreshToken);
       })
@@ -109,17 +103,20 @@ const userSlice = createSlice({
       })
       .addCase(fetchRegister.pending, (state) => {
         state.isAwaiting = true;
+        state.errorText = '';
       })
       .addCase(fetchRegister.fulfilled, (state, action) => {
         state.user = action.payload.user;
+        state.errorText = '';
         state.isAwaiting = false;
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
         setCookie('accessToken', state.accessToken);
         localStorage.setItem('refreshToken', state.refreshToken);
       })
-      .addCase(fetchRegister.rejected, (state) => {
+      .addCase(fetchRegister.rejected, (state, action) => {
         state.isAwaiting = false;
+        state.errorText = action.payload as string;
       })
       .addCase(fetchGetUser.fulfilled, (state, action) => {
         state.user = action.payload.user;

@@ -10,7 +10,7 @@ import {
 import { Link, NavLink } from 'react-router-dom';
 import clsx from 'clsx';
 import { useSelector } from '../../../services/store';
-import { getUser } from '../../../slices/userSlice';
+import { getUser } from '../../../services/slices/userSlice';
 
 export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
   <header className={styles.header}>

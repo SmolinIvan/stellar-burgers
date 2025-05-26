@@ -3,8 +3,8 @@ import { TIngredientsCategoryProps } from './type';
 import { TIngredient } from '@utils-types';
 import { IngredientsCategoryUI } from '../ui/ingredients-category';
 import { useSelector } from 'react-redux';
-import { selectAllIngredients } from '../../slices/ingredientsSlice';
-import { getBun, getIngredients } from '../../slices/orderSlice';
+import { selectAllIngredients } from '../../services/slices/ingredientsSlice';
+import { getBun, getIngredients } from '../../services/slices/orderSlice';
 
 export const IngredientsCategory = forwardRef<
   HTMLUListElement,

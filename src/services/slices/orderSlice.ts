@@ -32,11 +32,9 @@ export const fetchMakeOrder = createAsyncThunk(
   'order/makeOrder',
   async (data: string[], { rejectWithValue }) => {
     try {
-      // const { email, password } = data
       const order = await orderBurgerApi(data);
       return order;
     } catch (error) {
-      // console.log(error);
       return rejectWithValue((error as Error).message);
     }
   }
@@ -46,11 +44,9 @@ export const fetchGetOrders = createAsyncThunk(
   'order/getOrders',
   async (_, { rejectWithValue }) => {
     try {
-      // const { email, password } = data
       const orders = await getOrdersApi();
       return orders;
     } catch (error) {
-      // console.log(error);
       return rejectWithValue((error as Error).message);
     }
   }
@@ -60,16 +56,14 @@ export const fetchGetOrderById = createAsyncThunk(
   'order/getOrderById',
   async (id: number, { rejectWithValue }) => {
     try {
-      // const { email, password } = data
       const order = await getOrderByNumberApi(id);
       return order;
     } catch (error) {
-      // console.log(error);
       return rejectWithValue((error as Error).message);
     }
   }
 );
-// const orderData = fetchGetOrderById(Number(id))
+
 const orderSlice = createSlice({
   name: 'order',
   initialState,
@@ -105,12 +99,8 @@ const orderSlice = createSlice({
       ) => {
         const { dragIndex, hoverIndex } = action.payload;
         const newIngredients = [...state.ingredients];
-
-        // Удаляем элемент из старой позиции
         const [movedItem] = newIngredients.splice(dragIndex, 1);
-        // Вставляем в новую позицию
         newIngredients.splice(hoverIndex, 0, movedItem);
-
         state.ingredients = newIngredients;
       },
       prepare: (dragIndex: number, hoverIndex: number) => ({
@@ -125,7 +115,6 @@ const orderSlice = createSlice({
         const { index, direction } = action.payload;
         const newIndex = direction === 'up' ? index - 1 : index + 1;
 
-        // Проверяем границы массива
         if (newIndex >= 0 && newIndex < state.ingredients.length) {
           const newIngredients = [...state.ingredients];
           [newIngredients[index], newIngredients[newIndex]] = [

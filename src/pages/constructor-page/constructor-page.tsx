@@ -9,7 +9,7 @@ import { FC, useEffect } from 'react';
 import {
   fetchIngredients,
   ingredientsAreLoading
-} from '../../slices/ingredientsSlice';
+} from '../../services/slices/ingredientsSlice';
 import { Outlet } from 'react-router-dom';
 
 export const ConstructorPage: FC = () => {

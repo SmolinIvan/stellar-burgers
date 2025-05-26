@@ -115,6 +115,9 @@ export const orderBurgerApi = (data: string[]) =>
       ingredients: data
     })
   }).then((data) => {
+    // тут обман, тут приходит другой тип данных
+    // по-хорошему нужно описать возвращаемый тип данных
+    // а данные конвертировать под TOrder, чтобы заказ он верно отображался на Profile Orders в реальном времени, а не после получения всех заказов
     if (data?.success) return data;
     return Promise.reject(data);
   });
@@ -233,53 +236,3 @@ export const logoutApi = () =>
       token: localStorage.getItem('refreshToken')
     })
   }).then((res) => checkResponse<TServerResponse<{}>>(res));
-
-//   {
-//     "success": true,
-//     "name": "Флюоресцентный антарианский бургер",
-//     "order": {
-//         "ingredients": [
-//             {
-//                 "_id": "643d69a5c3f7b9001cfa093d",
-//                 "name": "Флюоресцентная булка R2-D3",
-//                 "type": "bun",
-//                 "proteins": 44,
-//                 "fat": 26,
-//                 "carbohydrates": 85,
-//                 "calories": 643,
-//                 "price": 988,
-//                 "image": "https://code.s3.yandex.net/react/code/bun-01.png",
-//                 "image_mobile": "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
-//                 "image_large": "https://code.s3.yandex.net/react/code/bun-01-large.png",
-//                 "__v": 0
-//             },
-//             {
-//                 "_id": "643d69a5c3f7b9001cfa0945",
-//                 "name": "Соус с шипами Антарианского плоскоходца",
-//                 "type": "sauce",
-//                 "proteins": 101,
-//                 "fat": 99,
-//                 "carbohydrates": 100,
-//                 "calories": 100,
-//                 "price": 88,
-//                 "image": "https://code.s3.yandex.net/react/code/sauce-01.png",
-//                 "image_mobile": "https://code.s3.yandex.net/react/code/sauce-01-mobile.png",
-//                 "image_large": "https://code.s3.yandex.net/react/code/sauce-01-large.png",
-//                 "__v": 0
-//             }
-//         ],
-//         "_id": "68305cd5c2f30c001cb2674c",
-//         "owner": {
-//             "name": "IvanKek",
-//             "email": "ivan@ivanmana.com",
-//             "createdAt": "2025-05-22T16:06:25.739Z",
-//             "updatedAt": "2025-05-22T16:06:25.739Z"
-//         },
-//         "status": "done",
-//         "name": "Флюоресцентный антарианский бургер",
-//         "createdAt": "2025-05-23T11:32:37.100Z",
-//         "updatedAt": "2025-05-23T11:32:37.832Z",
-//         "number": 78575,
-//         "price": 1076
-//     }
-// }

@@ -61,5 +61,8 @@ const feedSlice = createSlice({
   }
 });
 
+// тут три поля, которые не используются. Подумать куда их впихнуть или убрать
+// по-хорошему их можно использовать для возврата ошибок
+
 export const { getFeed, getTotalOrders, getTotalToday } = feedSlice.selectors;
 export const feedReducer = feedSlice.reducer;
