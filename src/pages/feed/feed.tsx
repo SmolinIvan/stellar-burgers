@@ -1,10 +1,9 @@
+import { getFeed, fetchFeedOrders } from '@slices';
 import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
 import { TOrder } from '@utils-types';
-import { FC, useEffect } from 'react';
-import { useDispatch, useSelector } from '../../services/store';
-import { fetchFeedOrders, getFeed } from '../../services/slices/feedSlice';
-import { ordersMock } from '../../components/ui/pages/constants';
+import { FC } from 'react';
+import { useSelector, useDispatch } from '@store';
 
 export const Feed: FC = () => {
   /** TODO: взять переменную из стора */

@@ -2,8 +2,9 @@ import { FC, SyntheticEvent, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from '../../services/store';
+import { useDispatch, useSelector } from '@store';
 import { fetchGetOrders, fetchLogin, getErrorText } from '@slices';
+import { error } from 'console';
 
 export const Login: FC = () => {
   const dispatch = useDispatch();
@@ -16,15 +17,12 @@ export const Login: FC = () => {
 
   const from = location.state?.from?.pathname || '/';
 
-  const handleSubmit = async (e: SyntheticEvent) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    try {
-      await dispatch(fetchLogin({ email, password })).unwrap();
-      dispatch(fetchGetOrders()).unwrap();
-      navigate(from, { replace: true });
-    } catch (error) {
-      console.error('Ошибка авторизации:', error);
-    }
+
+    dispatch(fetchLogin({ email, password })).then(() =>
+      dispatch(fetchGetOrders())
+    );
   };
 
   return (

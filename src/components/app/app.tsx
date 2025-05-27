@@ -19,13 +19,13 @@ import {
   OrderInfo,
   ProtectedRoute
 } from '@components';
-import { useDispatch } from '../../services/store';
-import { useSelector } from 'react-redux';
+
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { clearLastOrder, fetchGetOrders, fetchIngredients } from '@slices';
 import { useEffect } from 'react';
 import { fetchFeedOrders } from '@slices';
 import { fetchGetUser, getAuthState, getProcessAuthStatus } from '@slices';
+import { useDispatch, useSelector } from '@store';
 
 const App = () => {
   const isAwaited = useSelector(getProcessAuthStatus);

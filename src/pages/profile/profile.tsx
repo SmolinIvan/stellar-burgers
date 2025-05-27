@@ -1,11 +1,11 @@
+import { fetchUpdate, getUser } from '@slices';
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { getAuthState, getUser } from '../../services/slices/userSlice';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from '@store';
 
 export const Profile: FC = () => {
   /** TODO: взять переменную из стора */
+  const dispatch = useDispatch();
 
   const user = useSelector(getUser);
 
@@ -15,7 +15,6 @@ export const Profile: FC = () => {
     password: ''
   });
 
-  // НАдо сделать через протектер роут
   useEffect(() => {
     setFormValue((prevState) => ({
       ...prevState,
@@ -31,6 +30,8 @@ export const Profile: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+    dispatch(fetchUpdate(formValue));
+    handleCancel(e);
   };
 
   const handleCancel = (e: SyntheticEvent) => {

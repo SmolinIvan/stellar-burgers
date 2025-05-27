@@ -65,4 +65,4 @@ export const selectIngredientsError = (state: {
 export const { selectAllIngredients, ingredientsAreLoading } =
   ingredientsSlice.selectors;
 
-export default ingredientsSlice.reducer;
+export const ingredientsReducer = ingredientsSlice.reducer;

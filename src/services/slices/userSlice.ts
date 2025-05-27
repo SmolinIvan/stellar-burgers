@@ -1,9 +1,11 @@
 import {
   getUserApi,
   loginUserApi,
+  logoutApi,
   registerUserApi,
   TLoginData,
-  TRegisterData
+  TRegisterData,
+  updateUserApi
 } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
@@ -34,9 +36,7 @@ export const fetchLogin = createAsyncThunk(
   'user/login',
   async (data: TLoginData, { rejectWithValue }) => {
     try {
-      // const { email, password } = data
       const userData = await loginUserApi(data);
-      console.log(userData);
       return userData;
     } catch (error) {
       return rejectWithValue((error as Error).message);
@@ -56,6 +56,18 @@ export const fetchRegister = createAsyncThunk(
   }
 );
 
+export const fetchUpdate = createAsyncThunk(
+  'user/updateData',
+  async (data: TRegisterData, { rejectWithValue }) => {
+    try {
+      const userData = await updateUserApi(data);
+      return userData;
+    } catch (error) {
+      return rejectWithValue((error as Error).message);
+    }
+  }
+);
+
 export const fetchGetUser = createAsyncThunk(
   'user/getUser',
   async (_, { rejectWithValue }) => {
@@ -63,7 +75,18 @@ export const fetchGetUser = createAsyncThunk(
       const userData = await getUserApi();
       return userData;
     } catch (error) {
-      if (error as Error) console.log(error);
+      return rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+export const fetchLogout = createAsyncThunk(
+  'user/logoutUser',
+  async (_, { rejectWithValue }) => {
+    try {
+      const userData = await logoutApi();
+      return userData;
+    } catch (error) {
       return rejectWithValue((error as Error).message);
     }
   }
@@ -72,14 +95,7 @@ export const fetchGetUser = createAsyncThunk(
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    logOut: (state) => {
-      state.isAuthed = false;
-      console.log(state.isAuthed);
-      localStorage.removeItem('refreshToken');
-      deleteCookie('accessToken');
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchLogin.pending, (state) => {
@@ -118,6 +134,16 @@ const userSlice = createSlice({
         state.isAwaiting = false;
         state.errorText = action.payload as string;
       })
+      .addCase(fetchUpdate.pending, (state) => {
+        state.errorText = '';
+      })
+      .addCase(fetchUpdate.fulfilled, (state, action) => {
+        state.errorText = '';
+        state.user = action.payload.user;
+      })
+      .addCase(fetchUpdate.rejected, (state, action) => {
+        state.errorText = action.payload as string;
+      })
       .addCase(fetchGetUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.isAwaiting = false;
@@ -126,8 +152,20 @@ const userSlice = createSlice({
       .addCase(fetchGetUser.pending, (state) => {
         state.isAwaiting = true;
       })
-      .addCase(fetchGetUser.rejected, (state, action) => {
+      .addCase(fetchGetUser.rejected, (state) => {
         state.isAuthed = false;
+        state.isAwaiting = false;
+      })
+      .addCase(fetchLogout.pending, (state) => {
+        state.isAwaiting = true;
+      })
+      .addCase(fetchLogout.fulfilled, (state) => {
+        state.isAwaiting = false;
+        state.isAuthed = false;
+        localStorage.removeItem('refreshToken');
+        deleteCookie('accessToken');
+      })
+      .addCase(fetchLogout.rejected, (state) => {
         state.isAwaiting = false;
       });
   },
@@ -139,7 +177,6 @@ const userSlice = createSlice({
   }
 });
 
-export const { logOut } = userSlice.actions;
 export const { getAuthState, getUser, getProcessAuthStatus, getErrorText } =
   userSlice.selectors;
 export const userReducer = userSlice.reducer;

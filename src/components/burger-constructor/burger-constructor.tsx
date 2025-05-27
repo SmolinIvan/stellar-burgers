@@ -2,17 +2,17 @@ import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   clearLastOrder,
   fetchMakeOrder,
+  getAuthState,
   getBun,
   getCurrentOrder,
   getIngredients,
   getMakingOrderStatus
-} from '../../services/slices/orderSlice';
-import { useDispatch } from '../../services/store';
-import { useNavigate } from 'react-router-dom';
-import { getAuthState } from '@slices';
+} from '@slices';
+import { useDispatch } from '@store';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
