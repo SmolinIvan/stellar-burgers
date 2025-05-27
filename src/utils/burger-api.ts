@@ -115,6 +115,9 @@ export const orderBurgerApi = (data: string[]) =>
       ingredients: data
     })
   }).then((data) => {
+    // тут обман, тут приходит другой тип данных
+    // по-хорошему нужно описать возвращаемый тип данных
+    // а данные конвертировать под TOrder, чтобы заказ он верно отображался на Profile Orders в реальном времени, а не после получения всех заказов
     if (data?.success) return data;
     return Promise.reject(data);
   });
