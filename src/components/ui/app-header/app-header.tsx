@@ -7,10 +7,8 @@ import {
   Logo,
   ProfileIcon
 } from '@zlden/react-developer-burger-ui-components';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
-import { useSelector } from '../../../services/store';
-import { getUser } from '../../../services/slices/userSlice';
 
 export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
   <header className={styles.header}>
@@ -40,7 +38,9 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
         </NavLink>
       </div>
       <div className={styles.logo}>
-        <Logo className='' />
+        <NavLink to='/'>
+          <Logo className='' />
+        </NavLink>
       </div>
       <NavLink
         to='/profile'

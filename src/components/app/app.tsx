@@ -199,14 +199,3 @@ const App = () => {
 };
 
 export default App;
-
-{
-  /* <Route
-path='/feed/:number'
-element={
-  <Modal title={'kek '} onClose={defaultCloseHandler}>
-    <OrderInfo />
-  </Modal>
-}
-/> */
-}

@@ -4,7 +4,9 @@ import {
   fetchGetOrders,
   fetchLogin,
   fetchRegister,
-  getErrorText
+  getAccessToken,
+  getErrorText,
+  getRefreshToken
 } from '@slices';
 import { useDispatch, useSelector } from '@store';
 
@@ -19,7 +21,9 @@ export const Register: FC = () => {
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(fetchRegister({ email, name: userName, password }))
-      .then(() => dispatch(fetchLogin({ email, password })))
+      .then(() => {
+        dispatch(fetchLogin({ email, password }));
+      })
       .then(() => dispatch(fetchGetOrders()));
   };
 

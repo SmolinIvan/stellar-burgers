@@ -1,10 +1,9 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 
-import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from '@store';
 import { fetchGetOrders, fetchLogin, getErrorText } from '@slices';
-import { error } from 'console';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const Login: FC = () => {
   const dispatch = useDispatch();
@@ -20,9 +19,10 @@ export const Login: FC = () => {
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
 
-    dispatch(fetchLogin({ email, password })).then(() =>
-      dispatch(fetchGetOrders())
-    );
+    dispatch(fetchLogin({ email, password })).then(() => {
+      dispatch(fetchGetOrders());
+      navigate(from);
+    });
   };
 
   return (

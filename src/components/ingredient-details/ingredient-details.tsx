@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Preloader } from '../ui/preloader';
 import { IngredientDetailsUI } from '../ui/ingredient-details';
-import { useLocation, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useSelector } from '@store';
 import { selectAllIngredients } from '../../services/slices/ingredientsSlice';
 
 export const IngredientDetails: FC = () => {

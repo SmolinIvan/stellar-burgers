@@ -10,6 +10,7 @@ import {
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
 import { deleteCookie, setCookie } from '../../utils/cookie';
+import { stat } from 'fs';
 
 interface IUser {
   isAwaiting: boolean;
@@ -37,6 +38,8 @@ export const fetchLogin = createAsyncThunk(
   async (data: TLoginData, { rejectWithValue }) => {
     try {
       const userData = await loginUserApi(data);
+      setCookie('accessToken', userData.accessToken);
+      localStorage.setItem('refreshToken', userData.refreshToken);
       return userData;
     } catch (error) {
       return rejectWithValue((error as Error).message);
@@ -85,6 +88,8 @@ export const fetchLogout = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const userData = await logoutApi();
+      deleteCookie('accessToken');
+      localStorage.removeItem('refreshToken');
       return userData;
     } catch (error) {
       return rejectWithValue((error as Error).message);
@@ -109,8 +114,6 @@ const userSlice = createSlice({
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
         state.errorText = '';
-        setCookie('accessToken', state.accessToken);
-        localStorage.setItem('refreshToken', state.refreshToken);
       })
       .addCase(fetchLogin.rejected, (state, action) => {
         state.isAwaiting = false;
@@ -127,8 +130,6 @@ const userSlice = createSlice({
         state.isAwaiting = false;
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
-        setCookie('accessToken', state.accessToken);
-        localStorage.setItem('refreshToken', state.refreshToken);
       })
       .addCase(fetchRegister.rejected, (state, action) => {
         state.isAwaiting = false;
@@ -162,14 +163,16 @@ const userSlice = createSlice({
       .addCase(fetchLogout.fulfilled, (state) => {
         state.isAwaiting = false;
         state.isAuthed = false;
-        localStorage.removeItem('refreshToken');
-        deleteCookie('accessToken');
+        state.user.email = '';
+        state.user.name = '';
       })
       .addCase(fetchLogout.rejected, (state) => {
         state.isAwaiting = false;
       });
   },
   selectors: {
+    getAccessToken: (state) => state.accessToken,
+    getRefreshToken: (state) => state.refreshToken,
     getAuthState: (state) => state.isAuthed,
     getUser: (state) => state.user,
     getProcessAuthStatus: (state) => state.isAwaiting,
@@ -177,6 +180,12 @@ const userSlice = createSlice({
   }
 });
 
-export const { getAuthState, getUser, getProcessAuthStatus, getErrorText } =
-  userSlice.selectors;
+export const {
+  getAccessToken,
+  getRefreshToken,
+  getAuthState,
+  getUser,
+  getProcessAuthStatus,
+  getErrorText
+} = userSlice.selectors;
 export const userReducer = userSlice.reducer;
