@@ -51,7 +51,7 @@ const feedSlice = createSlice({
         state.isLoading = false;
         state.orders = action.payload.orders;
         state.total = action.payload.total;
-        state.totalToday = action.payload.total;
+        state.totalToday = action.payload.totalToday;
         state.success = action.payload.success;
       })
       .addCase(fetchFeedOrders.rejected, (state, action) => {
