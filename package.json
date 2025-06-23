@@ -89,13 +89,16 @@
   },
   "scripts": {
     "start": "webpack serve --mode=development",
+    "start:test": "react-scripts start",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier ./src --write",
+    "cypress": "cypress run",
     "cypress:open": "cypress open",
-    "test": "jest"
+    "test": "jest",
+    "test:ci": "jest --ci --coverage"
   },
   "eslintConfig": {
     "extends": [

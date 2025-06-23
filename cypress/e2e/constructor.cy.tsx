@@ -95,17 +95,17 @@ describe('Stellar burger', function () {
   beforeEach(() => {
     cy.setCookie('accessToken', mockAccessToken);
 
-    cy.intercept('GET', 'api/ingredients', {
+    cy.intercept('GET', `${Cypress.env('apiUrl')}/ingredients`, {
       statusCode: 200,
       body: { success: true, data: mockIngredients }
     }).as('getIngredients');
 
-    cy.intercept('GET', 'api/auth/user', {
+    cy.intercept('GET', `${Cypress.env('apiUrl')}//auth/user`, {
       statusCode: 200,
       body: mockUser
     }).as('getUser');
 
-    cy.visit('http://localhost:4000');
+    cy.visit('/');
     cy.wait('@getIngredients').then((interception) => {
       if (!interception.response) {
         throw new Error('Response is undefined');
@@ -134,7 +134,7 @@ describe('Stellar burger', function () {
   // такой поиск безопаснее и нет необходимости добавлять дополнительные теги в компонент
   it('добавляет ингридиенты через поиск по селекторам', function () {
     let addButtons: HTMLButtonElement[];
-    cy.contains('Выберите булки', { timeout: 10000 }).should('be.visible');
+    cy.contains('Выберите булки').should('be.visible');
     cy.get('button')
       .should(($buttons) => {
         addButtons = $buttons.toArray();
@@ -218,7 +218,7 @@ describe('Stellar burger', function () {
   });
 
   it('Создание заказа', function () {
-    cy.intercept('POST', 'api/orders', {
+    cy.intercept('POST', `${Cypress.env('apiUrl')}/orders`, {
       statusCode: 200,
       body: mockOrderData
     }).as('makeOrder');
