@@ -10,7 +10,6 @@ import {
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
 import { deleteCookie, setCookie } from '../../utils/cookie';
-import { stat } from 'fs';
 
 interface IUser {
   isAwaiting: boolean;
@@ -165,9 +164,13 @@ const userSlice = createSlice({
         state.isAuthed = false;
         state.user.email = '';
         state.user.name = '';
+        state.accessToken = undefined;
+        state.refreshToken = undefined;
       })
-      .addCase(fetchLogout.rejected, (state) => {
+      .addCase(fetchLogout.rejected, (state, action) => {
         state.isAwaiting = false;
+        state.isAuthed = false;
+        state.errorText = action.payload as string;
       });
   },
   selectors: {

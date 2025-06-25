@@ -1,171 +1,4 @@
-export const userState = {
-  isAwaiting: true,
-  isAuthed: false,
-  accessToken: undefined,
-  refreshToken: undefined,
-  user: {
-    email: '',
-    name: ''
-  },
-  errorText: ''
-};
-
-export const orderState = {
-  bun: null,
-  ingredients: [],
-  orders: [],
-  isMakingOrder: false,
-  currentOrder: null
-};
-
-export const ingredientsState = {
-  items: [],
-  isLoading: false,
-  error: null
-};
-
-export const feedState = {
-  isLoading: true,
-  orders: [],
-  total: 0,
-  totalToday: 0,
-  error: null,
-  success: false
-};
-
-export const ingredientBun = {
-  _id: '643d69a5c3f7b9001cfa093c',
-  name: 'Краторная булка N-200i',
-  type: 'bun',
-  proteins: 80,
-  fat: 24,
-  carbohydrates: 53,
-  calories: 420,
-  price: 1255,
-  image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-  image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
-  image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
-  __v: 0
-};
-
-export const ingredientMain = {
-  _id: '643d69a5c3f7b9001cfa0941',
-  name: 'Биокотлета из марсианской Магнолии',
-  type: 'main',
-  proteins: 420,
-  fat: 142,
-  carbohydrates: 242,
-  calories: 4242,
-  price: 424,
-  image: 'https://code.s3.yandex.net/react/code/meat-01.png',
-  image_mobile: 'https://code.s3.yandex.net/react/code/meat-01-mobile.png',
-  image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
-  __v: 0
-};
-
-export const ingredientSauce = {
-  _id: '643d69a5c3f7b9001cfa0942',
-  name: 'Соус Spicy-X',
-  type: 'sauce',
-  proteins: 30,
-  fat: 20,
-  carbohydrates: 40,
-  calories: 30,
-  price: 90,
-  image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
-  image_mobile: 'https://code.s3.yandex.net/react/code/sauce-02-mobile.png',
-  image_large: 'https://code.s3.yandex.net/react/code/sauce-02-large.png',
-  __v: 0
-};
-
-export const someIngredients = [
-  {
-    _id: '643d69a5c3f7b9001cfa093c',
-    name: 'Краторная булка N-200i',
-    type: 'bun',
-    proteins: 80,
-    fat: 24,
-    carbohydrates: 53,
-    calories: 420,
-    price: 1255,
-    image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
-    __v: 0
-  },
-  {
-    _id: '643d69a5c3f7b9001cfa093d',
-    name: 'Флюоресцентная булка R2-D3',
-    type: 'bun',
-    proteins: 44,
-    fat: 26,
-    carbohydrates: 85,
-    calories: 643,
-    price: 988,
-    image: 'https://code.s3.yandex.net/react/code/bun-01.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/bun-01-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/bun-01-large.png',
-    __v: 0
-  },
-  {
-    _id: '643d69a5c3f7b9001cfa0941',
-    name: 'Биокотлета из марсианской Магнолии',
-    type: 'main',
-    proteins: 420,
-    fat: 142,
-    carbohydrates: 242,
-    calories: 4242,
-    price: 424,
-    image: 'https://code.s3.yandex.net/react/code/meat-01.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/meat-01-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
-    __v: 0
-  },
-  {
-    _id: '643d69a5c3f7b9001cfa093e',
-    name: 'Филе Люминесцентного тетраодонтимформа',
-    type: 'main',
-    proteins: 44,
-    fat: 26,
-    carbohydrates: 85,
-    calories: 643,
-    price: 988,
-    image: 'https://code.s3.yandex.net/react/code/meat-03.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/meat-03-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/meat-03-large.png',
-    __v: 0
-  },
-  {
-    _id: '643d69a5c3f7b9001cfa0942',
-    name: 'Соус Spicy-X',
-    type: 'sauce',
-    proteins: 30,
-    fat: 20,
-    carbohydrates: 40,
-    calories: 30,
-    price: 90,
-    image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/sauce-02-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/sauce-02-large.png',
-    __v: 0
-  },
-  {
-    _id: '643d69a5c3f7b9001cfa0943',
-    name: 'Соус фирменный Space Sauce',
-    type: 'sauce',
-    proteins: 50,
-    fat: 22,
-    carbohydrates: 11,
-    calories: 14,
-    price: 80,
-    image: 'https://code.s3.yandex.net/react/code/sauce-04.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/sauce-04-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/sauce-04-large.png',
-    __v: 0
-  }
-];
-
-export const successGetOrders = {
+export const feedDataRequest = {
   success: true,
   orders: [
     {
@@ -842,4 +675,349 @@ export const successGetOrders = {
   ],
   total: 81955,
   totalToday: 112
+};
+
+export const makeOrderDataRequest = {
+  success: true,
+  name: 'Краторный spicy био-марсианский бургер',
+  order: {
+    ingredients: [
+      {
+        _id: '643d69a5c3f7b9001cfa093c',
+        name: 'Краторная булка N-200i',
+        type: 'bun',
+        proteins: 80,
+        fat: 24,
+        carbohydrates: 53,
+        calories: 420,
+        price: 1255,
+        image: 'https://code.s3.yandex.net/react/code/bun-02.png',
+        image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
+        image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
+        __v: 0
+      },
+      {
+        _id: '643d69a5c3f7b9001cfa0941',
+        name: 'Биокотлета из марсианской Магнолии',
+        type: 'main',
+        proteins: 420,
+        fat: 142,
+        carbohydrates: 242,
+        calories: 4242,
+        price: 424,
+        image: 'https://code.s3.yandex.net/react/code/meat-01.png',
+        image_mobile:
+          'https://code.s3.yandex.net/react/code/meat-01-mobile.png',
+        image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
+        __v: 0
+      },
+      {
+        _id: '643d69a5c3f7b9001cfa0942',
+        name: 'Соус Spicy-X',
+        type: 'sauce',
+        proteins: 30,
+        fat: 20,
+        carbohydrates: 40,
+        calories: 30,
+        price: 90,
+        image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
+        image_mobile:
+          'https://code.s3.yandex.net/react/code/sauce-02-mobile.png',
+        image_large: 'https://code.s3.yandex.net/react/code/sauce-02-large.png',
+        __v: 0
+      }
+    ],
+    _id: '685ace7a5a54df001b6d9341',
+    owner: {
+      name: 'IvanIvan',
+      email: 'ivan@ivanman.com',
+      createdAt: '2025-05-13T19:48:29.785Z',
+      updatedAt: '2025-05-13T19:48:29.785Z'
+    },
+    status: 'done',
+    name: 'Краторный spicy био-марсианский бургер',
+    createdAt: '2025-06-24T16:12:42.506Z',
+    updatedAt: '2025-06-24T16:12:43.278Z',
+    number: 82559,
+    price: 1769
+  }
+};
+
+export const ordersDataRequest = {
+  success: true,
+  orders: [
+    {
+      _id: '682f1f4fc2f30c001cb26344',
+      ingredients: [
+        '643d69a5c3f7b9001cfa093d',
+        '643d69a5c3f7b9001cfa093e',
+        '643d69a5c3f7b9001cfa0940'
+      ],
+      status: 'done',
+      name: 'Флюоресцентный люминесцентный метеоритный бургер',
+      createdAt: '2025-05-22T12:57:51.966Z',
+      updatedAt: '2025-05-22T12:57:52.731Z',
+      number: 78425
+    },
+    {
+      _id: '682f1f81c2f30c001cb26348',
+      ingredients: [
+        '643d69a5c3f7b9001cfa093c',
+        '643d69a5c3f7b9001cfa093e',
+        '643d69a5c3f7b9001cfa0940',
+        '643d69a5c3f7b9001cfa0947'
+      ],
+      status: 'done',
+      name: 'Краторный фалленианский люминесцентный метеоритный бургер',
+      createdAt: '2025-05-22T12:58:41.552Z',
+      updatedAt: '2025-05-22T12:58:42.262Z',
+      number: 78426
+    },
+    {
+      _id: '682f21e8c2f30c001cb2634e',
+      ingredients: ['643d69a5c3f7b9001cfa093d', '643d69a5c3f7b9001cfa093e'],
+      status: 'done',
+      name: 'Флюоресцентный люминесцентный бургер',
+      createdAt: '2025-05-22T13:08:56.190Z',
+      updatedAt: '2025-05-22T13:08:56.900Z',
+      number: 78428
+    },
+    {
+      _id: '682f2248c2f30c001cb26350',
+      ingredients: ['643d69a5c3f7b9001cfa093d', '643d69a5c3f7b9001cfa0941'],
+      status: 'done',
+      name: 'Флюоресцентный био-марсианский бургер',
+      createdAt: '2025-05-22T13:10:32.988Z',
+      updatedAt: '2025-05-22T13:10:33.844Z',
+      number: 78429
+    },
+    {
+      _id: '682f2924c2f30c001cb2637f',
+      ingredients: ['643d69a5c3f7b9001cfa093d', '643d69a5c3f7b9001cfa0946'],
+      status: 'done',
+      name: 'Флюоресцентный минеральный бургер',
+      createdAt: '2025-05-22T13:39:48.110Z',
+      updatedAt: '2025-05-22T13:39:48.839Z',
+      number: 78439
+    },
+    {
+      _id: '682f29a1c2f30c001cb26382',
+      ingredients: ['643d69a5c3f7b9001cfa093c', '643d69a5c3f7b9001cfa0941'],
+      status: 'done',
+      name: 'Краторный био-марсианский бургер',
+      createdAt: '2025-05-22T13:41:53.061Z',
+      updatedAt: '2025-05-22T13:41:53.745Z',
+      number: 78441
+    },
+    {
+      _id: '682f2b25c2f30c001cb2638b',
+      ingredients: ['643d69a5c3f7b9001cfa093c', '643d69a5c3f7b9001cfa0942'],
+      status: 'done',
+      name: 'Краторный spicy бургер',
+      createdAt: '2025-05-22T13:48:21.548Z',
+      updatedAt: '2025-05-22T13:48:22.250Z',
+      number: 78443
+    },
+    {
+      _id: '682f2badc2f30c001cb2638c',
+      ingredients: ['643d69a5c3f7b9001cfa093d', '643d69a5c3f7b9001cfa0943'],
+      status: 'done',
+      name: 'Space флюоресцентный бургер',
+      createdAt: '2025-05-22T13:50:37.003Z',
+      updatedAt: '2025-05-22T13:50:37.685Z',
+      number: 78444
+    },
+    {
+      _id: '682f2bd1c2f30c001cb2638d',
+      ingredients: ['643d69a5c3f7b9001cfa093d', '643d69a5c3f7b9001cfa0945'],
+      status: 'done',
+      name: 'Флюоресцентный антарианский бургер',
+      createdAt: '2025-05-22T13:51:13.119Z',
+      updatedAt: '2025-05-22T13:51:13.845Z',
+      number: 78445
+    },
+    {
+      _id: '682f2d4ac2f30c001cb26398',
+      ingredients: [
+        '643d69a5c3f7b9001cfa093d',
+        '643d69a5c3f7b9001cfa094a',
+        '643d69a5c3f7b9001cfa0943'
+      ],
+      status: 'done',
+      name: 'Астероидный space флюоресцентный бургер',
+      createdAt: '2025-05-22T13:57:30.690Z',
+      updatedAt: '2025-05-22T13:57:31.443Z',
+      number: 78447
+    },
+    {
+      _id: '682f2d5cc2f30c001cb26399',
+      ingredients: [
+        '643d69a5c3f7b9001cfa093d',
+        '643d69a5c3f7b9001cfa094a',
+        '643d69a5c3f7b9001cfa0943'
+      ],
+      status: 'done',
+      name: 'Астероидный space флюоресцентный бургер',
+      createdAt: '2025-05-22T13:57:48.573Z',
+      updatedAt: '2025-05-22T13:57:49.434Z',
+      number: 78448
+    },
+    {
+      _id: '682f2d90c2f30c001cb2639a',
+      ingredients: [
+        '643d69a5c3f7b9001cfa093d',
+        '643d69a5c3f7b9001cfa0943',
+        '643d69a5c3f7b9001cfa0944'
+      ],
+      status: 'done',
+      name: 'Space флюоресцентный традиционный-галактический бургер',
+      createdAt: '2025-05-22T13:58:40.493Z',
+      updatedAt: '2025-05-22T13:58:41.295Z',
+      number: 78449
+    },
+    {
+      _id: '682f2db4c2f30c001cb2639b',
+      ingredients: [
+        '643d69a5c3f7b9001cfa093d',
+        '643d69a5c3f7b9001cfa093e',
+        '643d69a5c3f7b9001cfa0942'
+      ],
+      status: 'done',
+      name: 'Флюоресцентный spicy люминесцентный бургер',
+      createdAt: '2025-05-22T13:59:16.242Z',
+      updatedAt: '2025-05-22T13:59:17.247Z',
+      number: 78450
+    },
+    {
+      _id: '682f3916c2f30c001cb263ca',
+      ingredients: ['643d69a5c3f7b9001cfa093d', '643d69a5c3f7b9001cfa0949'],
+      status: 'done',
+      name: 'Экзо-плантаго флюоресцентный бургер',
+      createdAt: '2025-05-22T14:47:50.091Z',
+      updatedAt: '2025-05-22T14:47:50.790Z',
+      number: 78452
+    },
+    {
+      _id: '6856b23d943eac001cc3b08b',
+      ingredients: ['643d69a5c3f7b9001cfa093d', '643d69a5c3f7b9001cfa0941'],
+      status: 'done',
+      name: 'Флюоресцентный био-марсианский бургер',
+      createdAt: '2025-06-21T13:23:09.975Z',
+      updatedAt: '2025-06-21T13:23:10.725Z',
+      number: 82177
+    },
+    {
+      _id: '6856b2f9943eac001cc3b08d',
+      ingredients: [
+        '643d69a5c3f7b9001cfa093c',
+        '643d69a5c3f7b9001cfa093e',
+        '643d69a5c3f7b9001cfa093e',
+        '643d69a5c3f7b9001cfa0943'
+      ],
+      status: 'done',
+      name: 'Краторный space люминесцентный бургер',
+      createdAt: '2025-06-21T13:26:17.227Z',
+      updatedAt: '2025-06-21T13:26:17.996Z',
+      number: 82178
+    },
+    {
+      _id: '6856b538943eac001cc3b096',
+      ingredients: ['643d69a5c3f7b9001cfa093d'],
+      status: 'done',
+      name: 'Флюоресцентный бургер',
+      createdAt: '2025-06-21T13:35:52.982Z',
+      updatedAt: '2025-06-21T13:35:53.678Z',
+      number: 82180
+    },
+    {
+      _id: '6856b589943eac001cc3b098',
+      ingredients: ['643d69a5c3f7b9001cfa093d'],
+      status: 'done',
+      name: 'Флюоресцентный бургер',
+      createdAt: '2025-06-21T13:37:13.075Z',
+      updatedAt: '2025-06-21T13:37:13.795Z',
+      number: 82181
+    },
+    {
+      _id: '6856b6c7943eac001cc3b09d',
+      ingredients: ['643d69a5c3f7b9001cfa093d'],
+      status: 'done',
+      name: 'Флюоресцентный бургер',
+      createdAt: '2025-06-21T13:42:31.386Z',
+      updatedAt: '2025-06-21T13:42:32.092Z',
+      number: 82182
+    },
+    {
+      _id: '6856b6e0943eac001cc3b09e',
+      ingredients: ['643d69a5c3f7b9001cfa093d', '643d69a5c3f7b9001cfa093e'],
+      status: 'done',
+      name: 'Флюоресцентный люминесцентный бургер',
+      createdAt: '2025-06-21T13:42:56.010Z',
+      updatedAt: '2025-06-21T13:42:56.872Z',
+      number: 82183
+    },
+    {
+      _id: '6856b7d5943eac001cc3b0a0',
+      ingredients: ['643d69a5c3f7b9001cfa093d', '643d69a5c3f7b9001cfa0941'],
+      status: 'done',
+      name: 'Флюоресцентный био-марсианский бургер',
+      createdAt: '2025-06-21T13:47:01.964Z',
+      updatedAt: '2025-06-21T13:47:02.684Z',
+      number: 82184
+    },
+    {
+      _id: '685ace7a5a54df001b6d9341',
+      ingredients: [
+        '643d69a5c3f7b9001cfa093c',
+        '643d69a5c3f7b9001cfa0941',
+        '643d69a5c3f7b9001cfa0942'
+      ],
+      status: 'done',
+      name: 'Краторный spicy био-марсианский бургер',
+      createdAt: '2025-06-24T16:12:42.506Z',
+      updatedAt: '2025-06-24T16:12:43.278Z',
+      number: 82559
+    }
+  ],
+  total: 82204,
+  totalToday: 123
+};
+
+export const orderByIdDataRequest = {
+  success: true,
+  orders: [
+    {
+      _id: '685ace7a5a54df001b6d9341',
+      ingredients: [
+        '643d69a5c3f7b9001cfa093c',
+        '643d69a5c3f7b9001cfa0941',
+        '643d69a5c3f7b9001cfa0942'
+      ],
+      owner: '6823a20dc2f30c001cb23717',
+      status: 'done',
+      name: 'Краторный spicy био-марсианский бургер',
+      createdAt: '2025-06-24T16:12:42.506Z',
+      updatedAt: '2025-06-24T16:12:43.278Z',
+      number: 82559,
+      __v: 0
+    }
+  ]
+};
+
+export const loginDataRequest = {
+  success: true,
+  accessToken: 'Bearer kekokek',
+  refreshToken: 'kekokek2',
+  user: {
+    email: 'ivan@ivanman.com',
+    name: 'IvanIvan'
+  }
+};
+
+export const userDataRequest = {
+  success: true,
+  user: {
+    email: 'asdasd@asd.ru',
+    name: 'asdasd'
+  }
 };

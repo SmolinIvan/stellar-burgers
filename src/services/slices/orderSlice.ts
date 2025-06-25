@@ -132,7 +132,6 @@ const orderSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchMakeOrder.fulfilled, (state, action) => {
-        console.log(state.orders);
         state.orders = [...state.orders, action.payload.order];
         state.currentOrder = action.payload.order;
         state.isMakingOrder = false;

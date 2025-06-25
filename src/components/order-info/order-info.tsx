@@ -14,13 +14,11 @@ export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
 
   const { number } = useParams();
-  const currentOrder = useSelector(getCurrentOrder);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchGetOrderById(Number(number)));
   }, [dispatch]);
 
-  console.log(currentOrder);
   const orderData = useSelector(getCurrentOrder);
 
   const ingredients: TIngredient[] = useSelector(selectAllIngredients);
