@@ -17,3 +17,6 @@
 ## Важно:
 
 Для корректной работы запросов к серверу необходимо добавить переменную BURGER_API_URL в окружение. Сама ссылка находится в файле `.env.example`.
+
+
+![Tests](https://github.com/your/repo/actions/workflows/tests.yml/badge.svg)
